@@ -125,7 +125,6 @@ async function generatePostureSolution() {
 
 function displayPostureInfo(data) {
     try {
-        const postureInfo = document.getElementById('postureInfo');
         if (!postureInfo) throw new Error('Posture info element not found');
 
         let html = '<div class="posture-card">';
@@ -213,8 +212,7 @@ function displayPostureInfo(data) {
         postureInfo.innerHTML = html;
     } catch (error) {
         console.error('Error displaying posture information:', error);
-        document.getElementById('postureInfo').innerHTML = 
-            '<div class="error">Error displaying posture information. Please try again.</div>';
+        postureInfo.innerHTML = '<div class="error">Error displaying posture information. Please try again.</div>';
     }
 }
 
