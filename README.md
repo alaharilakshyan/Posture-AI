@@ -82,5 +82,3 @@ Big thanks to all contributors and supporters! 🙌
 
 Stay healthy, and happy coding! 🎉
 ```
-
-
