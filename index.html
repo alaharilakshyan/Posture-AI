@@ -4,25 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Posture AI</title>
-    <link rel="stylesheet" href="input.css">
-    <link href="https://fonts.googleapis.com/css2?family=Grechen+Fuemen&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Grechen+Fuemen&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            300: '#c4b5fd',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            800: '#5b21b6',
+                            900: '#4c1d95',
+                        },
+                        secondary: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            200: '#a7f3d0',
+                            300: '#6ee7b7',
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        },
+                        accent: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            300: '#fdba74',
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            800: '#9a3412',
+                            900: '#7c2d12',
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Oswald', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
 </head>
-<body>
-    <div class="container">
-        <header>
-            <h1><i class="fa-solid fa-person-rays"></i> Posture AI</h1>
-            <p class="subtitle">Your AI-Powered Posture Corrector</p>
+<body class="bg-gradient-to-br from-primary-50 to-secondary-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <header class="text-center mb-10">
+            <h1 class="text-4xl font-bold text-primary-800 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-person-rays text-accent-500"></i> Posture AI
+            </h1>
+            <p class="subtitle text-xl text-secondary-600 mt-2">Your AI-Powered Posture Corrector</p>
         </header>
-        <div class="search-section">
-            <div class="search-container">
-                <input type="text" id="postureInput" placeholder="Enter Your Posture Problem">
-                <button id="generateButton">
-                    <i class="fa-solid fa-magnifying-glass"></i>Generate
-                </button>
+        
+        <div class="search-section bg-white rounded-xl shadow-lg p-6 mb-8">
+            <div class="search-container mb-6">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <input type="text" id="postureInput" placeholder="Enter Your Posture Problem (e.g., Scoliosis, Kyphosis, Slouching, etc.)" 
+                           class="flex-grow px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                    <button id="generateButton" class="bg-accent-500 hover:bg-accent-600 text-white font-medium py-3 px-6 rounded-lg transition duration-300 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-magnifying-glass"></i>Generate
+                    </button>
+                </div>
             </div>
-            <div class="problem-section">
-                <select id="Problem">
+            
+            <div class="problem-section grid grid-cols-1 md:grid-cols-3 gap-4">
+                <select id="Problem" class="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
                     <option value="">Select Problem</option>
                     <option value="1">Scoliosis</option>
                     <option value="2">Kyphosis</option>
@@ -32,7 +91,7 @@
                     <option value="6">Uneven Shoulders</option>
                     <option value="7">Text Neck</option>
                 </select>
-                <select id="duration">
+                <select id="duration" class="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:border-transparent">
                     <option value="">Select Duration</option>
                     <option value="1">1 Week</option>
                     <option value="2">2 Weeks</option>
@@ -40,7 +99,7 @@
                     <option value="4">3 Months</option>
                     <option value="5">6 Months</option>
                 </select>
-                <select id="intensity">
+                <select id="intensity" class="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent">
                     <option value="">Select Intensity</option>
                     <option value="1">Mild</option>
                     <option value="2">Low</option>
@@ -53,23 +112,37 @@
         </div>
 
         <div id="loading" class="hidden">
-            <div class="spinner">
-                <p>Please be patient while we generate your Relief Plan...</p>
+            <div class="spinner flex flex-col items-center justify-center p-8 bg-white rounded-xl shadow-lg">
+                <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent-500 mb-4"></div>
+                <p class="text-primary-700 font-medium">Please be patient while we generate your Relief Plan...</p>
             </div>
+        </div>
 
-            <div id="PostureInfo" class="output-area">
-                <div class="welcome-message">
-                    <h2>Personalized Posture AI Corrector</h2>
-                    <p>Share your sitting style, get your custom posture solution:</p>
-                    <ul>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
-                </div>
+        <div id="PostureInfo" class="output-area bg-white rounded-xl shadow-lg p-6">
+            <div class="welcome-message text-center">
+                <h2 class="text-2xl font-bold text-primary-800 mb-4">Personalized Posture AI Corrector</h2>
+                <p class="text-gray-700 mb-6">Share your sitting style, get your custom posture solution:</p>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                    <li class="flex items-center gap-3 p-3 bg-primary-50 rounded-lg">
+                        <i class="fa-solid fa-hand-point-right text-primary-600 text-xl"></i>
+                        <span>Get Instant Relief plan</span>
+                    </li>
+                    <li class="flex items-center gap-3 p-3 bg-secondary-50 rounded-lg">
+                        <i class="fa-solid fa-lightbulb text-secondary-600 text-xl"></i>
+                        <span>Tips for mindful movement</span>
+                    </li>
+                    <li class="flex items-center gap-3 p-3 bg-accent-50 rounded-lg">
+                        <i class="fa-solid fa-comment-medical text-accent-600 text-xl"></i>
+                        <span>Expert Advice & Resources</span>
+                    </li>
+                    <li class="flex items-center gap-3 p-3 bg-primary-50 rounded-lg">
+                        <i class="fa-solid fa-eye text-primary-600 text-xl"></i>
+                        <span>Insights into your posture</span>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
