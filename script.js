@@ -1,15 +1,15 @@
 //Gemini API configuration
 const GEMINI_API_KEY = "AIzaSyD49e6J6JkykoYtBco_cbjE4rjYImT_WzA";
-const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=GEMINI_API_KEY";
+const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
 
 
 //DOM Elements
 const postureInput = document.getElementById('postureInput');
 const generateButton = document.getElementById('generateButton');
-const problemSection = document.getElementById('problem');
+const problemSelect = document.getElementById('Problem');
 const durationSelect = document.getElementById('duration');
-const intensityselect = document.getElementById('intensity');
-const postureInfo = document.getElementById('postureInfo');
+const intensitySelect = document.getElementById('intensity');
+const postureInfo = document.getElementById('PostureInfo');
 const loadingElement = document.getElementById('loading');
 
 //Event Listeners
@@ -24,7 +24,7 @@ postureInput.addEventListener('keypress', (e) => {
 async function generatePostureSolution() {
     const problem = postureInput.value.trim();
     const duration = durationSelect.value;
-    const intensity = intensityselect.value;
+    const intensity = intensitySelect.value;
 
     if(!problem) {
         showError('Please enter a posture problem');
@@ -35,6 +35,7 @@ async function generatePostureSolution() {
     postureInfo.innerHTML = '';
 
     try{
+        console.log('Sending request to Gemini API...');
         const prompt = `Create a concise and effective posture improvement guide for ${problem} with these preferences:
         Duration: ${duration || 'flexible'} days
         Intensity: ${intensity || 'moderate'}
@@ -56,6 +57,8 @@ async function generatePostureSolution() {
             "duration": "${duration || 'flexible'}"
         }`
 
+        console.log('API URL:', GEMINI_API_URL);
+        
         const response = await fetch(GEMINI_API_URL, {
             method: 'POST',
             headers: {
@@ -70,14 +73,20 @@ async function generatePostureSolution() {
             })
         });
 
+        console.log('Response status:', response.status);
+        
         if (!response.ok) {
-            throw new Error('Failed to get response');
+            const errorText = await response.text();
+            console.error('API Error:', errorText);
+            throw new Error(`Failed to get response: ${response.status} ${response.statusText}`);
         }
 
         const data = await response.json();
+        console.log('API Response:', data);
         
         // Extract the text content from the response
         const responseText = data.candidates[0].content.parts[0].text;
+        console.log('Response text:', responseText);
         
         // Try to parse the JSON from the response text
         try {
@@ -85,9 +94,12 @@ async function generatePostureSolution() {
             const jsonMatch = responseText.match(/\{[\s\S]*\}/);
             if (jsonMatch) {
                 const jsonStr = jsonMatch[0];
+                console.log('Extracted JSON:', jsonStr);
                 const postureData = JSON.parse(jsonStr);
+                console.log('Parsed data:', postureData);
                 displayPostureInfo(postureData);
             } else {
+                console.log('No JSON found in response');
                 // If no JSON found, display the raw text
                 postureInfo.innerHTML = `<div class="posture-card"><p>${responseText}</p></div>`;
             }
@@ -142,21 +154,12 @@ function displayPostureInfo(data) {
     html += `
     <div class="tips-section">
         <h4>Crucial Tips</h4>
-        <div class="tip">
-            <i class="fa-solid fa-check-circle"></i>
-            <p>${data.tips[0]}</p>
-        </div>
-        <div class="tip">
-            <i class="fa-solid fa-hospital"></i>
-            <p>${data.tips[0]}</p>
-        </div>
-        <div class="tip">
-            <i class="fa-solid fa-sethoscope"></i>
-            <p>${data.tips[0]}</p>
-        </div>
-        <div class="tip">
-        <i class="fa-solid fa-notes-medical"></i>
-        <p>${data.tips[0]}</p>
+        ${data.tips && data.tips.length > 0 ? data.tips.map((tip, index) => `
+            <div class="tip">
+                <i class="fa-solid fa-check-circle"></i>
+                <p>${tip}</p>
+            </div>
+        `).join('') : '<p>No tips provided.</p>'}
     </div>
     `;
     postureInfo.innerHTML = html;
@@ -171,8 +174,8 @@ function showError(message) {
 }
 
 // Add error message styling
-const style = document.createElement('style');
-style.textContent = `
+const errorStyle = document.createElement('style');
+errorStyle.textContent = `
     .error-message {
         background-color: #ffebee;
         color: #c62828;
@@ -186,7 +189,7 @@ style.textContent = `
     }
 `;
 
-document.head.appendChild(style);
+document.head.appendChild(errorStyle);
 
 // Add project card styling
 const projectStyle = document.createElement('style');
@@ -249,6 +252,6 @@ projectStyle.textContent = `
     }
 `;
 
-document.head.appendChild(Style);
+document.head.appendChild(projectStyle);
 
 
