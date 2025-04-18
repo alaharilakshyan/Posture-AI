@@ -41,6 +41,7 @@ async function generatePostureSolution() {
 
         Format the response as a JSON object with the following structure:
         {
+            "overview": "Brief overview of the posture problem and solution",
             "exercises": [
                 {
                     "name": string,
@@ -50,7 +51,9 @@ async function generatePostureSolution() {
                 }
             ],
             "tips": [string],
-            "warnings": [string]
+            "warnings": [string],
+            "intensity": "${intensity || 'moderate'}",
+            "duration": "${duration || 'flexible'}"
         }`
 
         const response = await fetch(GEMINI_API_URL, {
@@ -72,7 +75,27 @@ async function generatePostureSolution() {
         }
 
         const data = await response.json();
-        postureInfo.innerHTML = data.candidates[0].content.parts[0].text;
+        
+        // Extract the text content from the response
+        const responseText = data.candidates[0].content.parts[0].text;
+        
+        // Try to parse the JSON from the response text
+        try {
+            // Find the JSON object in the response text
+            const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+            if (jsonMatch) {
+                const jsonStr = jsonMatch[0];
+                const postureData = JSON.parse(jsonStr);
+                displayPostureInfo(postureData);
+            } else {
+                // If no JSON found, display the raw text
+                postureInfo.innerHTML = `<div class="posture-card"><p>${responseText}</p></div>`;
+            }
+        } catch (parseError) {
+            console.error("Error parsing JSON:", parseError);
+            // If parsing fails, display the raw text
+            postureInfo.innerHTML = `<div class="posture-card"><p>${responseText}</p></div>`;
+        }
 
     } catch (error) {
         showError('Error generating solution: ' + error.message);
@@ -226,6 +249,6 @@ projectStyle.textContent = `
     }
 `;
 
-document.head.appendChild(projectStyle);
+document.head.appendChild(Style);
 
 
