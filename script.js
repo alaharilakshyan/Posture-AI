@@ -1,6 +1,6 @@
 //Gemini API configuration
 const GEMINI_API_KEY = "AIzaSyD49e6J6JkykoYtBco_cbjE4rjYImT_WzA";
-const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+const GEMINI_API_URL =  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=GEMINI_API_KEY";
 
 
 //DOM Elements
@@ -55,7 +55,9 @@ async function generatePostureSolution() {
             "warnings": [string],
             "intensity": "${intensity || 'moderate'}",
             "duration": "${duration || 'flexible'}"
-        }`
+        }
+
+        Ensure the response is strictly in JSON format.`;
 
         console.log('API URL:', GEMINI_API_URL);
         
@@ -110,6 +112,7 @@ async function generatePostureSolution() {
         }
 
     } catch (error) {
+        console.error('Error:', error);
         showError('Error generating solution: ' + error.message);
     } finally {
         loadingElement.classList.add('hidden');
@@ -117,52 +120,62 @@ async function generatePostureSolution() {
 }
 
 function displayPostureInfo(data) {
-    let html = `
-        <div class="posture-card">
-            <h2>Posture Improvement Guide</h2>
-            <p>${data.overview}</p>
-        </div>
-    `;
-    
-    // Display exercises
-    html += `
-    <div class="posture-card">
-        <h3>Exercises</h3>
-        <ul>
-            ${data.exercises.map(exercise => `
-                <li>
-                    <strong>${exercise.name}</strong>
-                    <p>${exercise.description}</p>
-                    <p>Duration: ${exercise.duration}</p>
-                    <p>Frequency: ${exercise.frequency}</p>
-                </li>
-            `).join('')}
-        </ul>
-    </div>
-    `;
-    
- //Intensity and Duration
- html += `
-    <div class="posture-card">
-        <h3>Intensity and Duration</h3>
-        <p>Intensity: ${data.intensity}</p>
-        <p>Duration: ${data.duration}</p>
-    </div>
- `;
-    
-    // Tips and Warnings
-    html += `
-    <div class="tips-section">
-        <h4>Crucial Tips</h4>
-        ${data.tips && data.tips.length > 0 ? data.tips.map((tip, index) => `
-            <div class="tip">
-                <i class="fa-solid fa-check-circle"></i>
-                <p>${tip}</p>
+    try {
+        let html = `
+            <div class="posture-card">
+                <h2>Posture Improvement Guide</h2>
+                <p>${data.overview || 'No overview provided'}</p>
             </div>
-        `).join('') : '<p>No tips provided.</p>'}
-    </div>
-    `;
-    postureInfo.innerHTML = html;
+        `;
+        
+        // Display exercises if available
+        if (data.exercises && Array.isArray(data.exercises) && data.exercises.length > 0) {
+            html += `
+            <div class="posture-card">
+                <h3>Exercises</h3>
+                <ul>
+                    ${data.exercises.map(exercise => `
+                        <li>
+                            <strong>${exercise.name || 'Unnamed Exercise'}</strong>
+                            <p>${exercise.description || 'No description provided'}</p>
+                            <p>Duration: ${exercise.duration || 'Not specified'}</p>
+                            <p>Frequency: ${exercise.frequency || 'Not specified'}</p>
+                        </li>
+                    `).join('')}
+                </ul>
+            </div>
+            `;
+        }
+        
+        //Intensity and Duration
+        html += `
+        <div class="posture-card">
+            <h3>Intensity and Duration</h3>
+            <p>Intensity: ${data.intensity || 'Not specified'}</p>
+            <p>Duration: ${data.duration || 'Not specified'}</p>
+        </div>
+        `;
+        
+        // Tips and Warnings
+        if (data.tips && Array.isArray(data.tips) && data.tips.length > 0) {
+            html += `
+            <div class="tips-section">
+                <h4>Crucial Tips</h4>
+                ${data.tips.map((tip, index) => `
+                    <div class="tip">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <p>${tip || 'No tip provided'}</p>
+                    </div>
+                `).join('')}
+            </div>
+            `;
+        }
+        
+        postureInfo.innerHTML = html;
+    } catch (error) {
+        console.error('Error displaying posture info:', error);
+        showError('Error displaying the posture information. Please try again.');
+    }
 }
 
 function showError(message) {
