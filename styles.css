@@ -1,94 +1,246 @@
+/* Modern Variables */
+:root {
+    --primary-color: #6366f1;
+    --primary-hover: #4f46e5;
+    --secondary-color: #10b981;
+    --accent-color: #f59e0b;
+    --danger-color: #ef4444;
+    --text-primary: #1f2937;
+    --text-secondary: #4b5563;
+    --bg-light: #f9fafb;
+    --bg-white: #ffffff;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --radius-md: 0.5rem;
+    --radius-lg: 1rem;
+    --transition: all 0.3s ease;
+}
+
+/* Base Card Styles */
 .posture-card {
-    background: white;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.posture-card h2, .posture-card h3 {
-    color: #333;
-    margin-bottom: 15px;
+.posture-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
 }
 
+/* Headings */
+.posture-card h2, 
+.posture-card h3 {
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.posture-card h2::after,
+.posture-card h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: var(--primary-color);
+    border-radius: 2px;
+}
+
+/* Schedule Info */
 .schedule-info {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin: 10px 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin: 1.25rem 0;
 }
 
 .schedule-item {
     display: flex;
     align-items: center;
-    gap: 8px;
-    background: #f8f9fa;
-    padding: 10px 15px;
-    border-radius: 6px;
-    min-width: 200px;
+    gap: 1rem;
+    background: var(--bg-light);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.schedule-item:hover {
+    background: var(--bg-white);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
 }
 
 .schedule-item i {
-    color: #4a90e2;
-    font-size: 1.2em;
+    color: var(--primary-color);
+    font-size: 1.25rem;
+    transition: var(--transition);
 }
 
+.schedule-item:hover i {
+    transform: scale(1.1);
+}
+
+/* Exercise List */
+.posture-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.posture-card li {
+    background: var(--bg-light);
+    margin-bottom: 1rem;
+    padding: 1.25rem;
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.posture-card li:hover {
+    background: var(--bg-white);
+    transform: translateX(5px);
+    box-shadow: var(--shadow-md);
+}
+
+.posture-card li strong {
+    display: block;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Tips Section */
 .tips-section {
-    margin-top: 20px;
+    background: var(--bg-light);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin: 1.5rem 0;
 }
 
 .tips-section h4 {
-    color: #333;
-    margin-bottom: 15px;
+    color: var(--text-primary);
+    margin-bottom: 1.25rem;
+    font-weight: 600;
 }
 
 .tip {
     display: flex;
     align-items: flex-start;
-    gap: 10px;
-    margin-bottom: 10px;
-    padding: 10px;
-    background: #f8f9fa;
-    border-radius: 6px;
+    gap: 1rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: var(--bg-white);
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+}
+
+.tip:hover {
+    transform: translateX(5px);
+    box-shadow: var(--shadow-sm);
 }
 
 .tip i {
-    color: #28a745;
-    margin-top: 3px;
+    color: var(--secondary-color);
+    font-size: 1.25rem;
+    transition: var(--transition);
 }
 
-.tip.warning i {
-    color: #dc3545;
+.tip:hover i {
+    transform: rotate(15deg);
 }
 
+/* Warning Tips */
 .warnings .tip {
-    background: #fff3f3;
+    background: #fff5f5;
+    border-left: 4px solid var(--danger-color);
 }
 
-ul {
-    list-style: none;
-    padding: 0;
+.warnings .tip i {
+    color: var(--danger-color);
 }
 
-li {
-    margin-bottom: 20px;
-    padding: 15px;
-    background: #f8f9fa;
-    border-radius: 8px;
+.warnings .tip:hover {
+    background: #fee2e2;
 }
 
-li strong {
-    display: block;
-    margin-bottom: 8px;
-    color: #2c3e50;
+/* Error Message */
+.error-message {
+    background: #fef2f2;
+    color: var(--danger-color);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    margin: 1rem 0;
+    border-left: 4px solid var(--danger-color);
+    animation: slideIn 0.3s ease;
 }
 
+/* Loading Animation */
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--bg-light);
+    border-top: 3px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Animations */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-    .schedule-item {
-        min-width: 100%;
+    .schedule-info {
+        grid-template-columns: 1fr;
     }
     
-    .schedule-info {
+    .posture-card {
+        padding: 1rem;
+    }
+    
+    .tip {
         flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .tip i {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
     }
 } 
