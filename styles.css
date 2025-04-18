@@ -1,0 +1,94 @@
+.posture-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.posture-card h2, .posture-card h3 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.schedule-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 10px 0;
+}
+
+.schedule-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f8f9fa;
+    padding: 10px 15px;
+    border-radius: 6px;
+    min-width: 200px;
+}
+
+.schedule-item i {
+    color: #4a90e2;
+    font-size: 1.2em;
+}
+
+.tips-section {
+    margin-top: 20px;
+}
+
+.tips-section h4 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.tip {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.tip i {
+    color: #28a745;
+    margin-top: 3px;
+}
+
+.tip.warning i {
+    color: #dc3545;
+}
+
+.warnings .tip {
+    background: #fff3f3;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+li strong {
+    display: block;
+    margin-bottom: 8px;
+    color: #2c3e50;
+}
+
+@media (max-width: 768px) {
+    .schedule-item {
+        min-width: 100%;
+    }
+    
+    .schedule-info {
+        flex-direction: column;
+    }
+} 

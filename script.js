@@ -1,6 +1,6 @@
 //Gemini API configuration
 const GEMINI_API_KEY = "AIzaSyD49e6J6JkykoYtBco_cbjE4rjYImT_WzA";
-const GEMINI_API_URL =  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=GEMINI_API_KEY";
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
 
 //DOM Elements
@@ -61,7 +61,7 @@ async function generatePostureSolution() {
 
         console.log('API URL:', GEMINI_API_URL);
         
-        const response = await fetch(GEMINI_API_URL, {
+        const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -79,8 +79,12 @@ async function generatePostureSolution() {
         
         if (!response.ok) {
             const errorText = await response.text();
-            console.error('API Error:', errorText);
-            throw new Error(`Failed to get response: ${response.status} ${response.statusText}`);
+            console.error('API Error Details:', {
+                status: response.status,
+                statusText: response.statusText,
+                errorText: errorText
+            });
+            throw new Error(`API request failed: ${response.status} ${response.statusText}${errorText ? ' - ' + errorText : ''}`);
         }
 
         const data = await response.json();
@@ -121,60 +125,96 @@ async function generatePostureSolution() {
 
 function displayPostureInfo(data) {
     try {
-        let html = `
-            <div class="posture-card">
-                <h2>Posture Improvement Guide</h2>
-                <p>${data.overview || 'No overview provided'}</p>
-            </div>
-        `;
+        const postureInfo = document.getElementById('postureInfo');
+        if (!postureInfo) throw new Error('Posture info element not found');
+
+        let html = '<div class="posture-card">';
         
-        // Display exercises if available
-        if (data.exercises && Array.isArray(data.exercises) && data.exercises.length > 0) {
-            html += `
-            <div class="posture-card">
-                <h3>Exercises</h3>
-                <ul>
-                    ${data.exercises.map(exercise => `
-                        <li>
-                            <strong>${exercise.name || 'Unnamed Exercise'}</strong>
-                            <p>${exercise.description || 'No description provided'}</p>
-                            <p>Duration: ${exercise.duration || 'Not specified'}</p>
-                            <p>Frequency: ${exercise.frequency || 'Not specified'}</p>
-                        </li>
-                    `).join('')}
-                </ul>
-            </div>
-            `;
-        }
-        
-        //Intensity and Duration
+        // Overview Section
         html += `
-        <div class="posture-card">
-            <h3>Intensity and Duration</h3>
-            <p>Intensity: ${data.intensity || 'Not specified'}</p>
-            <p>Duration: ${data.duration || 'Not specified'}</p>
-        </div>
+            <h2>Posture Overview</h2>
+            <p>${data.overview || 'No overview available.'}</p>
         `;
-        
-        // Tips and Warnings
-        if (data.tips && Array.isArray(data.tips) && data.tips.length > 0) {
-            html += `
-            <div class="tips-section">
-                <h4>Crucial Tips</h4>
-                ${data.tips.map((tip, index) => `
-                    <div class="tip">
-                        <i class="fa-solid fa-check-circle"></i>
-                        <p>${tip || 'No tip provided'}</p>
-                    </div>
-                `).join('')}
+
+        // Exercises Section
+        if (data.exercises && data.exercises.length > 0) {
+            html += '<h3>Recommended Exercises</h3><ul>';
+            data.exercises.forEach(exercise => {
+                html += `
+                    <li>
+                        <strong>${exercise.name}</strong>
+                        <p>${exercise.description}</p>
+                        <div class="schedule-info">
+                            <div class="schedule-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Duration: ${exercise.duration || '20 minutes'}</span>
+                            </div>
+                            <div class="schedule-item">
+                                <i class="fas fa-redo"></i>
+                                <span>Frequency: ${exercise.frequency || '3 times daily'}</span>
+                            </div>
+                        </div>
+                    </li>
+                `;
+            });
+            html += '</ul>';
+        }
+
+        // Daily Schedule Section
+        html += `
+            <h3>Daily Schedule</h3>
+            <div class="schedule-info">
+                <div class="schedule-item">
+                    <i class="fas fa-sun"></i>
+                    <span>Morning Session: 20 minutes</span>
+                </div>
+                <div class="schedule-item">
+                    <i class="fas fa-cloud-sun"></i>
+                    <span>Afternoon Session: 20 minutes</span>
+                </div>
+                <div class="schedule-item">
+                    <i class="fas fa-moon"></i>
+                    <span>Evening Session: 20 minutes</span>
+                </div>
             </div>
+        `;
+
+        // Tips Section
+        if (data.tips && data.tips.length > 0) {
+            html += `
+                <div class="tips-section">
+                    <h4>Helpful Tips</h4>
+                    ${data.tips.map(tip => `
+                        <div class="tip">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>${tip}</span>
+                        </div>
+                    `).join('')}
+                </div>
             `;
         }
-        
+
+        // Warnings Section
+        if (data.warnings && data.warnings.length > 0) {
+            html += `
+                <div class="tips-section warnings">
+                    <h4>Important Warnings</h4>
+                    ${data.warnings.map(warning => `
+                        <div class="tip warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>${warning}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        html += '</div>'; // Close posture-card
         postureInfo.innerHTML = html;
     } catch (error) {
-        console.error('Error displaying posture info:', error);
-        showError('Error displaying the posture information. Please try again.');
+        console.error('Error displaying posture information:', error);
+        document.getElementById('postureInfo').innerHTML = 
+            '<div class="error">Error displaying posture information. Please try again.</div>';
     }
 }
 
