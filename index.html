@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posture AI</title>
+    <link rel="stylesheet" href="input.css">
+    <link href="https://fonts.googleapis.com/css2?family=Grechen+Fuemen&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fa-solid fa-person-rays"></i> Posture AI</h1>
+            <p class="subtitle">Your AI-Powered Posture Corrector</p>
+        </header>
+        <div class="search-section">
+            <div class="search-container">
+                <input type="text" id="postureInput" placeholder="Enter Your Posture Problem">
+                <button id="generateButton">
+                    <i class="fa-solid fa-magnifying-glass"></i>Generate
+                </button>
+            </div>
+            <div class="problem-section">
+                <select id="Problem">
+                    <option value="">Select Problem</option>
+                    <option value="1">Scoliosis</option>
+                    <option value="2">Kyphosis</option>
+                    <option value="3">Slouching</option>
+                    <option value="4">Hunchback</option>
+                    <option value="5">Flat Back Syndrome</option>
+                    <option value="6">Uneven Shoulders</option>
+                    <option value="7">Text Neck</option>
+                </select>
+                <select id="duration">
+                    <option value="">Select Duration</option>
+                    <option value="1">1 Week</option>
+                    <option value="2">2 Weeks</option>
+                    <option value="3">1 Month</option>
+                    <option value="4">3 Months</option>
+                    <option value="5">6 Months</option>
+                </select>
+                <select id="intensity">
+                    <option value="">Select Intensity</option>
+                    <option value="1">Mild</option>
+                    <option value="2">Low</option>
+                    <option value="3">Moderate</option>
+                    <option value="4">Medium</option>
+                    <option value="5">High</option>
+                    <option value="6">Severe</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="loading" class="hidden">
+            <div class="spinner">
+                <p>Please be patient while we generate your Relief Plan...</p>
+            </div>
+
+            <div id="PostureInfo" class="output-area">
+                <div class="welcome-message">
+                    <h2>Personalized Posture AI Corrector</h2>
+                    <p>Share your sitting style, get your custom posture solution:</p>
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

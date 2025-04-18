@@ -1,0 +1,284 @@
+:root {
+    --primary-color: #4a6bff;
+    --secondary-color: #6c5ce7;
+    --text-color: #2d3436;
+    --light-bg: #f7f9fc;
+    --white: #ffffff;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, var(--light-bg) 0%, #e6f3ff 100%);
+    min-height: 100vh;
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+.search-section {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+}
+
+.search-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 1rem;
+    border: 2px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+button {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--white);
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(74, 107, 255, 0.2);
+}
+
+.filters {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+select {
+    padding: 0.8rem;
+    border: 2px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background-color: var(--white);
+    min-width: 200px;
+}
+
+.output-area {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+}
+
+.welcome-message {
+    text-align: center;
+    padding: 2rem;
+}
+
+.welcome-message h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+.welcome-message ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.welcome-message li {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem;
+    background: var(--light-bg);
+    border-radius: 8px;
+    transition: transform 0.3s;
+}
+
+.welcome-message li:hover {
+    transform: translateY(-3px);
+}
+
+.welcome-message i {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+.hidden {
+    display: none;
+}
+
+#loading {
+    text-align: center;
+    padding: 2rem;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .search-container {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .filters {
+        flex-direction: column;
+    }
+
+    select {
+        width: 100%;
+    }
+}
+
+/* City Info Cards */
+.city-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.city-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.city-card p {
+    margin-bottom: 1rem;
+}
+
+.city-card ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.city-card li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.city-card li:last-child {
+    border-bottom: none;
+}
+
+/* Day Schedule */
+.day-schedule {
+    background: var(--light-bg);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.day-schedule h4 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+}
+
+.time-slot {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--white);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.time {
+    font-weight: 600;
+    color: var(--primary-color);
+    min-width: 100px;
+}
+
+.activity {
+    flex: 1;
+}
+
+/* Tips Section */
+.tips-section {
+    background: #fff8e1;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-top: 2rem;
+}
+
+.tips-section h4 {
+    color: #ff9800;
+    margin-bottom: 1rem;
+}
+
+.tip {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.tip i {
+    color: #ff9800;
+    margin-top: 0.3rem;
+}

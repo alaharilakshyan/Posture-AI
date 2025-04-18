@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Explorer AI</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-map-marked-alt"></i> City Explorer AI</h1>
+            <p class="subtitle">Your AI-powered travel companion for the perfect city exploration</p>
+        </header>
+
+        <div class="search-section">
+            <div class="search-container">
+                <input type="text" id="cityInput" placeholder="Enter city name (e.g., Paris, Tokyo, New York)">
+                <button id="exploreButton">
+                    <i class="fas fa-search"></i> Explore
+                </button>
+            </div>
+            <div class="filters">
+                <select id="duration">
+                    <option value="">Select Duration</option>
+                    <option value="1">1 Day</option>
+                    <option value="2">2 Days</option>
+                    <option value="3">3 Days</option>
+                    <option value="5">5 Days</option>
+                    <option value="7">1 Week</option>
+                </select>
+                <select id="interests">
+                    <option value="">Select Interests</option>
+                    <option value="history">History & Culture</option>
+                    <option value="food">Food & Dining</option>
+                    <option value="nature">Nature & Outdoors</option>
+                    <option value="art">Art & Museums</option>
+                    <option value="shopping">Shopping</option>
+                    <option value="nightlife">Nightlife</option>
+                </select>
+                <select id="budget">
+                    <option value="">Budget Level</option>
+                    <option value="budget">Budget</option>
+                    <option value="moderate">Moderate</option>
+                    <option value="luxury">Luxury</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="loading" class="hidden">
+            <div class="spinner"></div>
+            <p>Creating your perfect city exploration plan...</p>
+        </div>
+
+        <div id="cityInfo" class="output-area">
+            <div class="welcome-message">
+                <h2>Welcome to City Explorer AI</h2>
+                <p>Enter a city name to get a personalized exploration plan, including:</p>
+                <ul>
+                    <li><i class="fas fa-map"></i> Must-visit attractions</li>
+                    <li><i class="fas fa-utensils"></i> Local cuisine recommendations</li>
+                    <li><i class="fas fa-clock"></i> Optimal visiting times</li>
+                    <li><i class="fas fa-walking"></i> Walking routes and transportation</li>
+                    <li><i class="fas fa-info-circle"></i> Local tips and insights</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
